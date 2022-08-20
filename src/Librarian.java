@@ -4,7 +4,7 @@ public class Librarian {
     private String password;
     private String email;
 
-        public String getNic() {
+    public String getNic() {
         return nic;
     }
 

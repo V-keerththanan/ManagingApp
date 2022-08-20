@@ -54,12 +54,12 @@ public class Main {
     }
 
     public void add() {
-
+        Book book=new Book();
         System.out.println("Enter Book id:");
-        String bid = sc.next();
+        book.setBid(sc.next());
         System.out.println("Enter Book name: ");
-        String bname = sc.next();
-        dbop.addBook(bid, bname);
+        book.setBname(sc.nextLine());
+        dbop.addBook(book);
 
     }
 
@@ -69,12 +69,13 @@ public class Main {
     }
 
     public void issue(){
+        Issue issue=new Issue();
         System.out.println("Enter Member id:");
-        String mid = sc.next();
+       issue.setMid(sc.next());
         System.out.println("Enter Book id: ");
-        String bid = sc.next();
+        issue.setBid(sc.next());
         System.out.println("Enter Issue date: ");
-        String date = sc.next();
-        dbop.issueBook(mid, bid, date);
+        issue.setIssueDate(sc.next());
+        dbop.issueBook(issue);
     }
 }

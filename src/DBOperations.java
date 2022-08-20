@@ -5,14 +5,14 @@ import java.util.ArrayList;
 public class DBOperations {
     DBConnection mycon = new DBConnection();
 
-    public void addBook(String bid, String bname) {
+    public void addBook(Book b) {
 
         try {
             String sql = "INSERT INTO book(bid,bname) VALUES (?,?)";
 
             PreparedStatement statement = mycon.getMyConnection().prepareStatement(sql);
-            statement.setString(1, bid);
-            statement.setString(2, bname);
+            statement.setString(1, b.getBid());
+            statement.setString(2, b.getBname());
 
 
             int rowsInserted = statement.executeUpdate();
@@ -48,7 +48,7 @@ public class DBOperations {
         }
     }
 
-    public void issueBook(String mid, String bid, String date) {
+    public void issueBook(Issue objI) {
         String sql = "INSERT INTO issue(issuemid,issuebid,issueDate) VALUES (?,?,?)";
         ArrayList<String> Allmemberid = new ArrayList<>();
         ArrayList<String> Allbookid = new ArrayList<>();
@@ -56,18 +56,18 @@ public class DBOperations {
         Allbookid=getAllbid();
         try {
 
-            if (Allmemberid.contains(mid) && Allbookid.contains(bid)) {
+            if (Allmemberid.contains(objI.getMid()) && Allbookid.contains(objI.getBid())) {
                 String sql2="SELECT * FROM issue where stat='not returned' AND issuebid=(?)";
                 PreparedStatement statement1 = mycon.getMyConnection().prepareStatement(sql2);
-                statement1.setString(1,bid);
+                statement1.setString(1,objI.getBid());
                 ResultSet result=statement1.executeQuery();
 
                 if(result.next()) {
                     PreparedStatement statement = mycon.getMyConnection().prepareStatement(sql);
 
-                    statement.setString(1, mid);
-                    statement.setString(2, bid);
-                    statement.setString(3, date);
+                    statement.setString(1, objI.getMid());
+                    statement.setString(2, objI.getBid());
+                    statement.setString(3, objI.getIssueDate());
                     int rowsInserted = statement.executeUpdate();
                     if (rowsInserted > 0) {
                         System.out.println("A Book was issued successfully");
